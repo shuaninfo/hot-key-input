@@ -1,42 +1,66 @@
 {
   "name": "hot-key-input",
   "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+  "license": "MIT",
+  "private": false,
+  "main": "dist/index.min.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/browsers/monaco-languages-more"
   },
-  "dependencies": {
-    "core-js": "^3.6.5",
+  "bugs": {
+    "url": "https://gitee.com/browsers/monaco-languages-moreissues"
+  },
+  "keywords": [
+    "oracle",
+    "promql",
+    "monaco",
+    "monaco-editor"
+  ],
+  "scripts": {
+    "dev": "webpack --config lib.config.js --watch",
+    "dev:example": "vue-cli-service serve",
+    "lint": "vue-cli-service lint",
+    "lib": "webpack --config lib.config.js --watch"
+  },
+  "preeDependencies": {
+    "core-js": "^2.6.5",
     "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-modules-umd": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-stage-0": "^7.8.3",
+    "@types/tape": "^4.2.34",
+    "@vue/cli-plugin-babel": "^4.5.8",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.6.5",
+    "css-loader": "^5.0.0",
+    "glob": "^7.1.6",
+    "husky": "^4.3.0",
+    "jsdom": "^16.4.0",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "monaco-editor": "^0.19.3",
+    "monaco-editor-core": "0.19.0",
+    "monaco-plugin-helpers": "^1.0.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "progress-bar-webpack-plugin": "^2.1.0",
+    "requirejs": "^2.3.6",
+    "style-loader": "^2.0.0",
+    "tape": "^4.13.2",
+    "terser": "^5.3.0",
+    "typescript": "4.0.2",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  }
 }
