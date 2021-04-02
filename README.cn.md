@@ -1,29 +1,28 @@
 # hot-key-input
 
-[中文](./README.cn.md)
-
-> 快捷键绑定，基于：https://codesandbox.io/s/vue-hotkeyinput-90m2k
+> base: https://codesandbox.io/s/vue-hotkeyinput-90m2k
 
 ![](examples/assets/hot-key-input01.gif)
 
-## Project setup
+## 项目步骤
 
 ```
 npm install
 ```
 
-### development
+### 开发
 
 ```shell
-# run lib
+# 1、运行组件
 npm run dev
 
-# run example
-# new ternimal
+# 2、运行示例
+# 新建一个终端
 npm run dev:example
+
 ```
 
-### compiles and minifies for production
+### 打包
 
 ```
 npm run lib

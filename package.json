@@ -1,27 +1,26 @@
 {
   "name": "@shuaninfo/hot-key-input",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "private": false,
   "main": "dist/index.min.js",
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/browsers/monaco-languages-more"
+    "url": "https://github.com/shuaninfo/hot-key-input.git"
   },
   "bugs": {
-    "url": "https://gitee.com/browsers/monaco-languages-moreissues"
+    "url": "https://github.com/shuaninfo/hot-key-input/issues"
   },
   "keywords": [
-    "oracle",
-    "promql",
-    "monaco",
-    "monaco-editor"
+    "hot-key-input",
+    "vue"
   ],
   "scripts": {
     "dev": "webpack --config lib.config.js --watch",
     "dev:example": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
-    "lib": "webpack --config lib.config.js"
+    "lib": "webpack --config lib.config.js",
+	"upload": "npm publish --access public"
   },
   "preeDependencies": {
     "core-js": "^2.6.5",
