@@ -1,5 +1,5 @@
 {
-  "name": "hot-key-input",
+  "name": "@shuaninfo/hot-key-input",
   "version": "0.1.0",
   "license": "MIT",
   "private": false,
@@ -21,7 +21,7 @@
     "dev": "webpack --config lib.config.js --watch",
     "dev:example": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
-    "lib": "webpack --config lib.config.js --watch"
+    "lib": "webpack --config lib.config.js"
   },
   "preeDependencies": {
     "core-js": "^2.6.5",
