@@ -6,6 +6,7 @@
       :max="2"
       :reset="true"
       :shake="true"
+      :range="null"
       placeholder="请按需要绑定的按键，支持组合按键"></hot-key-input>
 
   <div style="margin: 20px;">

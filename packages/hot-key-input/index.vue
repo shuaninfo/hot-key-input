@@ -6,7 +6,7 @@
     tabindex="0"
     @focus="handleFocus"
     @blur="focus = false"
-    @keydown="handleKeydown"
+    @keydown.stop="handleKeydown"
     :placeholder="list.length ? '' : placeholder"
   >
     <div class="hot-item" v-for="(item, index) in list" :key="index">
@@ -122,6 +122,10 @@ export default {
     },
     range: {
       handler: function (val) {
+        if(val === null){
+          this.keyRange = null
+          return
+        }
         const keyRangeList = {
           NUMBER: CODE_NUMBER,
           NUMPAD: CODE_NUMPAD,
@@ -145,9 +149,14 @@ export default {
       this.list.splice(index, 1)
     },
     handleKeydown(e) {
+      e.preventDefault()
+      e.stopPropagation()
       const { altKey, ctrlKey, shiftKey, key, code } = e
       if (!CODE_CONTROL.includes(key)) {
-        if (!this.keyRange.includes(code)) return
+        if (this.keyRange !== null && !this.keyRange.includes(code)){
+          this.shakeAction()
+          return
+        }
         let controlKey = ''
         let temps = [
           { key: altKey, text: "Alt" },
@@ -169,7 +178,6 @@ export default {
           controlKey: { altKey, ctrlKey, shiftKey, key, code },
         })
       }
-      e.preventDefault()
     },
     addHotkey(data) {
       if (this.list.length) {
@@ -180,18 +188,21 @@ export default {
             return
           }
         } else if (this.list.some((item) => data.text === item.text)) {
-          if(this.shake){
-            this.isShark = true
-            setTimeout(()=>{
-              this.isShark = false
-            }, 800)
-          }
+          this.shakeAction()
           return
         }
       }
       if (!this.verify(data)) return
       this.list.push(data)
     },
+    shakeAction(){
+      if(this.shake){
+            this.isShark = true
+            setTimeout(()=>{
+              this.isShark = false
+            }, 800)
+          }
+    }
   },
 }
 </script>
