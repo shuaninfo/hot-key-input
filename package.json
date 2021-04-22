@@ -20,7 +20,7 @@
     "dev:example": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
     "lib": "webpack --config lib.config.js",
-	"upload": "npm publish --access public"
+	  "upload": "npm publish --access public"
   },
   "preeDependencies": {
     "core-js": "^2.6.5",

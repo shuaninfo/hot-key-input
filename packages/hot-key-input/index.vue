@@ -6,11 +6,11 @@
     tabindex="0"
     @focus="handleFocus"
     @blur="focus = false"
-    @keydown.stop="handleKeydown"
+    @keydown.prevent="handleKeydown"
     :placeholder="list.length ? '' : placeholder"
   >
     <div class="hot-item" v-for="(item, index) in list" :key="index">
-      <span class="hot-text">{{ item.text }} </span>
+      <span class="hot-text">{{ formatItemText(item.text) }} </span>
       <i class="icon-close" @click="handleDeleteKey(index)"></i>
     </div>
   </div>
@@ -39,6 +39,11 @@ const CODE_CONTROL = [
 export default {
   name: "HotKeyInput",
   props: {
+    type: {
+      type: String,
+      // lowser upper
+      default: ()=> 'defalut'
+    },
     // 默认绑定值
     // 传入 ['Ctrl+d'] 格式时会自动处理成 [{ text: 'Ctrl+d', controlKey: { altKey: false, ctrlKey: true, shiftKey: false, key: 'd', code: 'KeyD } }]
     hotkey: {
@@ -90,9 +95,16 @@ export default {
       // .sync修饰符
       this.$emit(
         "update:hotkey",
-        this.list.map((item) => item.text)
+        this.list.map((item) => {
+          return this.formatItemText(item.text)
+          // if(item.text && this.type != 'default'){
+          //   return this.type == 'lowser' ? item.text.toLowerCase():item.text.toUpperCase()
+          // }
+          // return item.text
+        })
       )
     },
+    
     hotkeyBackups: {
       handler: function (val) {
         if (!val.length) return;
@@ -142,6 +154,12 @@ export default {
     },
   },
   methods: {
+    formatItemText(text){
+      if(text && this.type != 'default'){
+        return this.type == 'lowser' ? text.toLowerCase() : text.toUpperCase()
+      }
+      return text
+    },
     handleFocus() {
       if (!this.list.length) this.focus = true
     },
@@ -149,6 +167,7 @@ export default {
       this.list.splice(index, 1)
     },
     handleKeydown(e) {
+      console.log('e: ',e)
       e.preventDefault()
       e.stopPropagation()
       const { altKey, ctrlKey, shiftKey, key, code } = e
@@ -192,7 +211,10 @@ export default {
           return
         }
       }
-      if (!this.verify(data)) return
+      if (!this.verify(data)) {
+        this.shakeAction()
+        return
+      }
       this.list.push(data)
     },
     shakeAction(){

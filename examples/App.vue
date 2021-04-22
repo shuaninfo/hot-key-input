@@ -4,6 +4,7 @@
       :hotkey.sync="hotKeyObj.keys"
       :verify="handleHotkeyVerify"
       :max="2"
+      type="lowser"
       :reset="true"
       :shake="true"
       :range="null"
@@ -16,6 +17,9 @@
 </template>
 
 <script>
+// https://stackoverflow.com/questions/40434142/javascript-event-preventdefault-is-useless-for-alttab-in-windows/40434403#40434403
+// 'ctrl+a',
+const disallowed_hotkeys = ['shift+a','ctrl+a','ctrl+w', 'ctrl+shift+w', 'ctrl+shift+n', 'ctrl+t', 'ctrl+n', 'ctrl+shift+t', 'ctrl+tab', 'ctrl+pagedown', 'ctrl+shift+tab', 'ctrl+pageup', 'alt+f4', 'cmd+q']
 export default {
   name: 'App',
   data(){
@@ -35,6 +39,10 @@ export default {
   methods:{
     handleHotkeyVerify(hotkey) {
       console.log('验证：', hotkey, this.hotKeyObj)
+      if(disallowed_hotkeys.includes(hotkey.text.toLowerCase())){
+        return false
+      }
+      console.log('验证：', hotkey, this.hotKeyObj)
       // for (const item of this.hotKeyList) {
       // }
       return true;
@@ -45,13 +53,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  @keyframes hot-key-input-shake {
-  0% {transform: scale(1);}
-  10%, 20% {transform: scale(0.9) rotate(-3deg);}
-  30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);}
-  40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);}
-  100% {transform: scale(1) rotate(0);}
-}
-</style>
