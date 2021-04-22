@@ -32,6 +32,7 @@ export default {
       ],
       hotKeyObj: {
         tab: 'save',
+        // keys: undefined
         keys: ["Ctrl+A", "Alt+D"]
       },
     }
