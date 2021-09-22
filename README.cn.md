@@ -23,7 +23,7 @@ npm run dev
 
 ```shell
 # 修改版本号
-npm run publish
+npm run upload
 ```
 
 ### issues

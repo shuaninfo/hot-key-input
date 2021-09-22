@@ -22,7 +22,7 @@ npm run dev
 ### npm publish
 
 ```
-npm run publish
+npm run upload
 ```
 
 ### issues

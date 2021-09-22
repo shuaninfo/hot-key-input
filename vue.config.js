@@ -12,13 +12,18 @@ module.exports = {
     config.module
       .rule('js')
       .include
-        .add('/packages')
-        .end()
+      .add('/packages')
+      .end()
       .use('babel')
-        .loader('babel-loader')
-        .tap(options => {
-          // 修改它的选项...
-          return options
-        })
+      .loader('babel-loader')
+      .tap(options => {
+        // 修改它的选项...
+        return options
+      })
+  },
+  configureWebpack: config => {
+    // if (process.env.NODE_ENV === 'production') {
+    config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+    // }
   }
 }
