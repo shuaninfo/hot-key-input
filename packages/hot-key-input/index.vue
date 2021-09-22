@@ -1,7 +1,7 @@
 <template>
   <div
     class="hot-key-input-component"
-    :class="{ cursor: focus, 'hot-key-input-shark': isShark }"
+    :class="{ 'cursor': focus, 'hot-key-input-shark': isShark }"
     :style="$props.style"
     tabindex="0"
     @focus="handleFocus"
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+// ShiftKey Control(Ctrl) Alt
+import keycodeMap from './keyCodeMap.js'
 const CODE_NUMBER = Array.from({ length: 10 }, (v, k) => `Digit${k + 1}`)
 const CODE_NUMPAD = Array.from({ length: 10 }, (v, k) => `Numpad${k + 1}`)
 const CODE_ABC = Array.from(
@@ -25,68 +27,68 @@ const CODE_ABC = Array.from(
 )
 const CODE_FN = Array.from({ length: 12 }, (v, k) => `F${k + 1}`)
 const CODE_CONTROL = [
-  "Shift",
-  "ShiftLeft",
-  "ShiftRight",
-  "Control",
-  "ControlLeft",
-  "ControlRight",
-  "Alt",
-  "AltLeft",
-  "AltRight",
-] // ShiftKey Control(Ctrl) Alt
-
+  'Shift',
+  'ShiftLeft',
+  'ShiftRight',
+  'Control',
+  'ControlLeft',
+  'ControlRight',
+  'Alt',
+  'AltLeft',
+  'AltRight',
+  'Meta'
+]
 export default {
-  name: "HotKeyInput",
+  name: 'HotKeyInput',
   props: {
     type: {
       type: String,
       // lowser upper
-      default: ()=> 'defalut'
+      default: () => 'defalut'
     },
     // 默认绑定值
     // 传入 ['Ctrl+d'] 格式时会自动处理成 [{ text: 'Ctrl+d', controlKey: { altKey: false, ctrlKey: true, shiftKey: false, key: 'd', code: 'KeyD } }]
     hotkey: {
-      type: Array | Object,
-      required: true,
+      type: Array || Object,
+      required: true
     },
     // 校验函数 判断是否允许显示快捷键
     verify: {
       type: Function,
-      default: () => true,
+      default: () => true
     },
     // 无绑定时提示文字
     placeholder: {
       type: String,
-      default: "",
+      default: ''
     },
     // 限制最大数量
     max: {
       type: [String, Number],
-      default: 0,
+      default: 0
     },
     // 当max时，再次输入快捷键 - true: 清空后输入，false：无操作
     reset: {
       type: Boolean,
-      default: false,
+      default: false
     },
     shake: {
       type: Boolean,
-      default: true,
+      default: true
     },
     // 快捷键使用范围
     range: {
       type: Array,
-      default: () => ["NUMBER", "NUMPAD", "ABC", "FN"],
-    },
+      default: () => ['NUMBER', 'NUMPAD', 'ABC', 'FN']
+    }
   },
-  data() {
+  data () {
     return {
       isShark: false,
       focus: false,
-      hotkeyBackups: this.hotkey || '' ,
+      hotkeyBackups: this.hotkey || '',
       list: [],
-      keyRange: [],
+      keyRange: []
     }
   },
   watch: {
@@ -94,7 +96,7 @@ export default {
       list.length ? (this.focus = false) : (this.focus = true)
       // .sync修饰符
       this.$emit(
-        "update:hotkey",
+        'update:hotkey',
         this.list.map((item) => {
           return this.formatItemText(item.text)
           // if(item.text && this.type != 'default'){
@@ -104,37 +106,37 @@ export default {
         })
       )
     },
-    
+
     hotkeyBackups: {
       handler: function (val) {
-        if (!val.length) return;
-        const list = [];
+        if (!val.length) return
+        const list = []
         val.forEach((item) => {
-          const arr = item.split("+");
+          const arr = item.split('+')
           const controlKey = {
-            altKey: arr.includes("Alt"),
-            ctrlKey: arr.includes("Control"),
-            shiftKey: arr.includes("Shift"),
+            altKey: arr.includes('Alt'),
+            ctrlKey: arr.includes('Control'),
+            shiftKey: arr.includes('Shift'),
             key: arr[arr.length - 1],
-            code: `Key${arr[arr.length - 1].toUpperCase()}`,
-          };
+            code: `Key${arr[arr.length - 1].toUpperCase()}`
+          }
           list.push({
             text: arr.reduce((text, item, i) => {
-              if (i) text += "+";
-              if (controlKey.key === item) text += item.toUpperCase();
-              else text += item;
-              return text;
-            }, ""),
-            controlKey,
-          });
-        });
-        this.list = list;
+              if (i) text += '+'
+              if (controlKey.key === item) text += item.toUpperCase()
+              else text += item
+              return text
+            }, ''),
+            controlKey
+          })
+        })
+        this.list = list
       },
-      immediate: true,
+      immediate: true
     },
     range: {
       handler: function (val) {
-        if(val === null){
+        if (val === null) {
           this.keyRange = null
           return
         }
@@ -142,7 +144,7 @@ export default {
           NUMBER: CODE_NUMBER,
           NUMPAD: CODE_NUMPAD,
           ABC: CODE_ABC,
-          FN: CODE_FN,
+          FN: CODE_FN
         }
         val.forEach((item) => {
           this.keyRange = this.keyRange.concat(
@@ -150,55 +152,60 @@ export default {
           )
         })
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
-    formatItemText(text){
-      if(text && this.type != 'default'){
-        return this.type == 'lowser' ? text.toLowerCase() : text.toUpperCase()
+    formatItemText (text) {
+      if (text && this.type !== 'default') {
+        return this.type === 'lowser' ? text.toLowerCase() : text.toUpperCase()
       }
       return text
     },
-    handleFocus() {
+    handleFocus () {
       if (!this.list.length) this.focus = true
     },
-    handleDeleteKey(index) {
+    handleDeleteKey (index) {
       this.list.splice(index, 1)
     },
-    handleKeydown(e) {
-      console.log('e: ',e)
+    handleKeydown (e) {
+      console.log('e: ', e)
       e.preventDefault()
       e.stopPropagation()
-      const { altKey, ctrlKey, shiftKey, key, code } = e
+      const { altKey, ctrlKey, shiftKey, metaKey, key, keyCode, code } = e
       if (!CODE_CONTROL.includes(key)) {
-        if (this.keyRange !== null && !this.keyRange.includes(code)){
+        if (this.keyRange !== null && !this.keyRange.includes(code)) {
           this.shakeAction()
           return
         }
         let controlKey = ''
-        let temps = [
-          { key: altKey, text: "Alt" },
-          { key: ctrlKey, text: "Ctrl" },
-          { key: shiftKey, text: "Shift" },
+        const temps = [
+          { key: altKey, text: 'Alt' },
+          { key: ctrlKey, text: 'Ctrl' },
+          { key: shiftKey, text: 'Shift' },
+          { key: metaKey, text: 'Meta' }
         ]
+        // keycode[curKey.text] ||
         temps.forEach((curKey) => {
           if (curKey.key) {
-            if (controlKey) controlKey += "+"
+            if (controlKey) controlKey += '+'
             controlKey += curKey.text
           }
         })
         if (key) {
-          if (controlKey) controlKey += "+"
-          controlKey += key.toUpperCase()
+          console.log('controlKey:  ', keycodeMap[keyCode])
+          if (controlKey) {
+            controlKey += '+'
+          }
+          controlKey += keycodeMap[keyCode] || key.toUpperCase()
         }
         this.addHotkey({
           text: controlKey,
-          controlKey: { altKey, ctrlKey, shiftKey, key, code },
+          controlKey: { altKey, ctrlKey, shiftKey, key, code }
         })
       }
     },
-    addHotkey(data) {
+    addHotkey (data) {
       if (this.list.length) {
         if (this.list.length.toString() >= this.max.toString()) {
           if (this.reset) {
@@ -217,15 +224,15 @@ export default {
       }
       this.list.push(data)
     },
-    shakeAction(){
-      if(this.shake){
-            this.isShark = true
-            setTimeout(()=>{
-              this.isShark = false
-            }, 800)
-          }
+    shakeAction () {
+      if (this.shake) {
+        this.isShark = true
+        setTimeout(() => {
+          this.isShark = false
+        }, 800)
+      }
     }
-  },
+  }
 }
 </script>
 <style lang="less">

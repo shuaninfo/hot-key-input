@@ -9,30 +9,20 @@
 ## Project setup
 
 ```
-npm install
+yarn install
 ```
 
 ### development
 
 ```shell
-# run lib
+# run lib add run example
 npm run dev
-
-# run example
-# new ternimal
-npm run dev:example
-```
-
-### compiles and minifies for production
-
-```
-npm run lib
 ```
 
 ### npm publish
 
 ```
-npm run upload
+npm run publish
 ```
 
 ### issues

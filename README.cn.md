@@ -7,31 +7,23 @@
 ## 项目步骤
 
 ```
-npm install
+yarn install
 ```
 
 ### 开发
 
 ```shell
-# 1、运行组件
+# 访问localhost:8080
 npm run dev
-
-# 2、运行示例
-# 新建一个终端
-npm run dev:example
-
 ```
 
-### 打包
 
-```
-npm run lib
-```
 
-### npm publish
+### 发布
 
-```
-npm run upload
+```shell
+# 修改版本号
+npm run publish
 ```
 
 ### issues
