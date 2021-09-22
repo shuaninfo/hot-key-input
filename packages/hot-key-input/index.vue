@@ -49,7 +49,8 @@ export default {
     // 默认绑定值
     // 传入 ['Ctrl+d'] 格式时会自动处理成 [{ text: 'Ctrl+d', controlKey: { altKey: false, ctrlKey: true, shiftKey: false, key: 'd', code: 'KeyD } }]
     hotkey: {
-      type: Array || Object,
+      // eslint-disable-next-line vue/require-prop-type-constructor
+      type: Array | Object,
       required: true
     },
     // 校验函数 判断是否允许显示快捷键
